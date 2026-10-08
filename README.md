@@ -34,8 +34,7 @@ methods reported in the paper.
 The external comparison table places HMoE, HARES, MPM, HGBO-HGP, GNNDSE-QoR,
 IronManPro-GPP, and SGFormer in the same SOTA comparison scope. HARES uses the
 fixed five-expert correction pool `HARP + GraphGPS + Exphormer + Polynormer +
-GatedGCN`; SGFormer is an external SOTA baseline and is deliberately excluded
-from that pool. The included SGFormer-RGCN files are a protocol-aligned adapter
+GatedGCN`. The included SGFormer-RGCN files are a protocol-aligned adapter
 under the HMoE manifest/cache split, not a claim of a complete reproduction of
 the original SGFormer dataset or feature pipeline.
 
