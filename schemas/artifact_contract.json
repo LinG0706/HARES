@@ -1,0 +1,89 @@
+{
+  "candidate_prediction_directory": {
+    "required_files": [
+      "target_support_predictions.csv",
+      "target_query_predictions.csv"
+    ],
+    "required_columns": [
+      "sample_id",
+      "kernel",
+      "gname",
+      "key",
+      "dataset_role",
+      "split",
+      "support_query",
+      "cache_split",
+      "file_name",
+      "actual_perf",
+      "seed",
+      "k",
+      "selection",
+      "y_true_perf",
+      "y_pred_perf",
+      "y_true_util_LUT",
+      "y_pred_util_LUT",
+      "y_true_util_FF",
+      "y_pred_util_FF",
+      "y_true_util_DSP",
+      "y_pred_util_DSP",
+      "y_true_util_BRAM",
+      "y_pred_util_BRAM"
+    ]
+  },
+  "stage5e_directory": {
+    "required_files_for_stage5i": [
+      "selection_lock.json",
+      "stage5e_convex_weights.csv",
+      "target_query_predictions.csv"
+    ],
+    "optional_file": "target_support_predictions.csv",
+    "selection_lock_requirement": "candidate paths must be relative or regenerated; no machine-specific absolute paths"
+  },
+  "hmoe_directory": {
+    "required_files": [
+      "target_support_predictions.csv",
+      "target_query_predictions.csv"
+    ]
+  },
+  "sota_prediction_directory": {
+    "sgformer": {
+      "role": "external SOTA comparison baseline; excluded from the HARES correction pool",
+      "layout": "artifacts/inputs/sota/sgformer/seed{1..5}/",
+      "required_files": [
+        "target_support_predictions.csv",
+        "target_query_predictions.csv"
+      ],
+      "required_columns": [
+        "sample_id",
+        "kernel",
+        "gname",
+        "key",
+        "dataset_role",
+        "split",
+        "support_query",
+        "cache_split",
+        "file_name",
+        "actual_perf",
+        "seed",
+        "k",
+        "selection",
+        "y_true_perf",
+        "y_pred_perf",
+        "y_true_util_LUT",
+        "y_pred_util_LUT",
+        "y_true_util_FF",
+        "y_pred_util_FF",
+        "y_true_util_DSP",
+        "y_pred_util_DSP",
+        "y_true_util_BRAM",
+        "y_pred_util_BRAM"
+      ],
+      "row_counts": {
+        "target_support_predictions.csv": 300,
+        "target_query_predictions.csv": 837
+      },
+      "ID_requirement": "sample_id sets must match the corresponding HMoE protocol manifest support/query IDs",
+      "hash_requirement": "both files are listed in artifacts/input_checksums.csv and validated by scripts/validate_release_inputs.py"
+    }
+  }
+}

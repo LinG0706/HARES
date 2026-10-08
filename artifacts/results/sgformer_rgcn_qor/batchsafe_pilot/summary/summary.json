@@ -1,0 +1,130 @@
+{
+  "baseline": "SGFormer-RGCN",
+  "protocol": "HMoE-aligned adapter",
+  "predictor_mode": "shared",
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "targets": [
+    "perf",
+    "util_LUT",
+    "util_FF",
+    "util_DSP",
+    "util_BRAM"
+  ],
+  "metric_definition": "Per-target sample MSE on left-out designs; Total MSE is the sum of five target MSEs",
+  "original_method_note": "The original Tang implementation uses a different dataset and HLS-report global features. This adapter uses HMoE graph/pragma inputs and the HMoE source/support/query protocol.",
+  "per_seed": [
+    {
+      "seed": 1,
+      "n_query": 837,
+      "perf_mse": 0.3848280154322044,
+      "perf_rmse": 0.6203450777045019,
+      "util_LUT_mse": 0.09332624711211598,
+      "util_LUT_rmse": 0.30549344855842,
+      "util_FF_mse": 0.6840023991839335,
+      "util_FF_rmse": 0.8270443755832776,
+      "util_DSP_mse": 0.21219612044737507,
+      "util_DSP_rmse": 0.4606475012928813,
+      "util_BRAM_mse": 0.015477113571064079,
+      "util_BRAM_rmse": 0.12440704791555854,
+      "total_mse": 1.389829895746693
+    },
+    {
+      "seed": 2,
+      "n_query": 837,
+      "perf_mse": 0.49522970815628176,
+      "perf_rmse": 0.7037255915172346,
+      "util_LUT_mse": 0.09324670932616463,
+      "util_LUT_rmse": 0.3053632416093408,
+      "util_FF_mse": 0.8951308662079158,
+      "util_FF_rmse": 0.9461135588331434,
+      "util_DSP_mse": 0.2561369195257735,
+      "util_DSP_rmse": 0.5060997130267646,
+      "util_BRAM_mse": 0.08970401936434243,
+      "util_BRAM_rmse": 0.2995062926957336,
+      "total_mse": 1.8294482225804782
+    },
+    {
+      "seed": 3,
+      "n_query": 837,
+      "perf_mse": 0.4353307199858969,
+      "perf_rmse": 0.6597959684522913,
+      "util_LUT_mse": 0.12820956232237143,
+      "util_LUT_rmse": 0.3580636288739355,
+      "util_FF_mse": 0.6362690575746159,
+      "util_FF_rmse": 0.7976647526214355,
+      "util_DSP_mse": 0.29290971989600284,
+      "util_DSP_rmse": 0.5412113449439164,
+      "util_BRAM_mse": 0.1423100302623916,
+      "util_BRAM_rmse": 0.37724001678293834,
+      "total_mse": 1.6350290900412787
+    },
+    {
+      "seed": 4,
+      "n_query": 837,
+      "perf_mse": 0.44297272353593026,
+      "perf_rmse": 0.6655619607038328,
+      "util_LUT_mse": 0.07119858468563875,
+      "util_LUT_rmse": 0.266830629211938,
+      "util_FF_mse": 0.6469528615213622,
+      "util_FF_rmse": 0.8043337998128403,
+      "util_DSP_mse": 0.16789735948465329,
+      "util_DSP_rmse": 0.40975280290030147,
+      "util_BRAM_mse": 0.01905745608907969,
+      "util_BRAM_rmse": 0.13804874533685443,
+      "total_mse": 1.3480789853166641
+    },
+    {
+      "seed": 5,
+      "n_query": 837,
+      "perf_mse": 0.46396332060536993,
+      "perf_rmse": 0.6811485305022466,
+      "util_LUT_mse": 0.11312921644642406,
+      "util_LUT_rmse": 0.33634686923832674,
+      "util_FF_mse": 0.8363944127419256,
+      "util_FF_rmse": 0.9145460145569088,
+      "util_DSP_mse": 0.2645186852744262,
+      "util_DSP_rmse": 0.5143138003927429,
+      "util_BRAM_mse": 0.02166427888683403,
+      "util_BRAM_rmse": 0.1471879033305184,
+      "total_mse": 1.6996699139549798
+    }
+  ],
+  "summary": [
+    {
+      "metric": "perf_mse",
+      "mean": 0.44446489754313667,
+      "sample_std": 0.04061856715016704
+    },
+    {
+      "metric": "util_LUT_mse",
+      "mean": 0.09982206397854296,
+      "sample_std": 0.021723632646396443
+    },
+    {
+      "metric": "util_FF_mse",
+      "mean": 0.7397499194459506,
+      "sample_std": 0.11822728687737244
+    },
+    {
+      "metric": "util_DSP_mse",
+      "mean": 0.23873176092564616,
+      "sample_std": 0.04905305519168693
+    },
+    {
+      "metric": "util_BRAM_mse",
+      "mean": 0.05764257963474236,
+      "sample_std": 0.056474971282481405
+    },
+    {
+      "metric": "total_mse",
+      "mean": 1.5804112215280188,
+      "sample_std": 0.2058668774311809
+    }
+  ]
+}

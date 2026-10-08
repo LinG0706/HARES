@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the HARES paper."
+title: "HARES: HMoE-Anchored Residual Ensemble for Few-Shot HLS QoR Prediction"
+type: software
+version: 1.0.0
+date-released: 2026-10-02
+authors:
+  - family-names: Lin
+    given-names: Ju
+  - family-names: Wang
+    given-names: Shanshan
+  - family-names: Xiao
+    given-names: Chenglong

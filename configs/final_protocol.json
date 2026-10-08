@@ -1,0 +1,48 @@
+{
+  "method": "HARES",
+  "method_id": "FSS-R4-M1",
+  "protocol": "paired_shared_hmoe_kmeans_support",
+  "source": {
+    "dataset": "HMoE pretrain_dataset",
+    "design_count": 9416,
+    "source_kernel_count": 33,
+    "split": "80/10/10 per source protocol"
+  },
+  "target": {
+    "dataset": "HMoE finetune_dataset",
+    "design_count": 1137,
+    "kernels": [
+      "fdtd-2d-large",
+      "gemm-p",
+      "gemver-medium",
+      "jacobi-2d",
+      "syr2k",
+      "trmm-opt"
+    ],
+    "support_per_kernel": 50,
+    "support_total": 300,
+    "query_total": 837
+  },
+  "seeds": {
+    "qor": [1, 2, 3, 4, 5]
+  },
+  "targets": ["perf", "util_LUT", "util_FF", "util_DSP", "util_BRAM"],
+  "shrinkage": {
+    "formula": "y_final = y_hmoe + lambda_target * (y_stage5e - y_hmoe)",
+    "lambda_grid": [0.0, 0.05, 0.1, 0.2, 0.3],
+    "min_support_relative_gain": 0.05,
+    "one_se_tolerance": 0.02,
+    "selection_labels": "support only",
+    "query_labels_used_for_selection": false
+  },
+  "metrics": {
+    "metric_batch_size": 64,
+    "paper_total_mse": "Sample-weighted sum of the five target MSE values across all query designs; paper Table I headline metric",
+    "hmoe_test_loss_batch_mean": "For each batch, sum the five target MSE values, then take an unweighted mean over batches; implementation diagnostic only"
+  },
+  "input_layout": {
+    "hmoe_root": "artifacts/inputs/hmoe",
+    "stage5e_root": "artifacts/inputs/stage5e",
+    "candidate_root": "artifacts/inputs/candidates"
+  }
+}

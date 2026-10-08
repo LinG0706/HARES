@@ -1,0 +1,170 @@
+{
+  "method_id": "FSS-R2-M1",
+  "method": "Stage5E-DMW-AFRC",
+  "selected_config": {
+    "scope": "per_kernel",
+    "alpha": 0.001,
+    "selection_threshold": 0.85,
+    "weight_floor": 0.1,
+    "weighted_cv_mean": 0.007716986131962952,
+    "weighted_cv_std": 0.0020309004558358287,
+    "weighted_cv_max": 0.013751632749682512,
+    "unweighted_cv_mean": 0.007819094957524865,
+    "mean_allowed": 2.7386666666666675,
+    "robust_score": 0.008732436359880866,
+    "best_robust_score": 0.008473706014009909,
+    "one_se_threshold": 0.008766529011704835,
+    "n_one_se_eligible": 5
+  },
+  "allowed_stats": {
+    "mean_allowed": 2.7333333333333334,
+    "min_allowed": 1,
+    "max_allowed": 5
+  },
+  "design_mass": {
+    "feature_count": 72,
+    "mass_min": 0.4655393896594995,
+    "mass_max": 2.076277971531791,
+    "mass_mean": 1.0,
+    "assigned_query_total": 837.0
+  },
+  "query_features_used_for_selection": [
+    "sample_id",
+    "kernel",
+    "key"
+  ],
+  "query_predictions_used_for_selection": false,
+  "query_labels_used_for_selection": false,
+  "candidate_hashes": [
+    {
+      "model": "harp_hmoe_support_paired",
+      "split": "support",
+      "path": "artifacts/inputs/candidates/seed2/harp_hmoe_support_paired/target_support_predictions.csv",
+      "sha256": "c81479b06d3ba1aaaada869e98535cf0e25128e191dddfbaae13073d104015f2"
+    },
+    {
+      "model": "harp_hmoe_support_paired",
+      "split": "query",
+      "path": "artifacts/inputs/candidates/seed2/harp_hmoe_support_paired/target_query_predictions.csv",
+      "sha256": "fe19d4f5100769d128ab4e8494873e15f0ee411cce6c6a5e77e672495e32521c"
+    },
+    {
+      "model": "graphgps",
+      "split": "support",
+      "path": "artifacts/inputs/candidates/seed2/graphgps/target_support_predictions.csv",
+      "sha256": "0d679f38e69ac9b298c659eaacebaf864be0fbaa65d6ebce6ebaaeefbdc39fc4"
+    },
+    {
+      "model": "graphgps",
+      "split": "query",
+      "path": "artifacts/inputs/candidates/seed2/graphgps/target_query_predictions.csv",
+      "sha256": "6dfde756d252228ed65a90183b95fa57aaa54fa2568133a1b0b6ab63cb457904"
+    },
+    {
+      "model": "exphormer",
+      "split": "support",
+      "path": "artifacts/inputs/candidates/seed2/exphormer/target_support_predictions.csv",
+      "sha256": "53b1de8e54c28d2d21d487909ab01865be09def3037c15fd0a303fd013ecf265"
+    },
+    {
+      "model": "exphormer",
+      "split": "query",
+      "path": "artifacts/inputs/candidates/seed2/exphormer/target_query_predictions.csv",
+      "sha256": "2fed3fee75a6fa2889919547bf5110dc27f2cbaec30ae039ce981b2ed9bde234"
+    },
+    {
+      "model": "polynormer",
+      "split": "support",
+      "path": "artifacts/inputs/candidates/seed2/polynormer/target_support_predictions.csv",
+      "sha256": "12c8ad909a181570d528bcb6fe3e0600b83ff37dc08d915b50647387afb066e3"
+    },
+    {
+      "model": "polynormer",
+      "split": "query",
+      "path": "artifacts/inputs/candidates/seed2/polynormer/target_query_predictions.csv",
+      "sha256": "5593bb22de60328764c033264dadaa50f190258ef84018871cd0a26f3a9a7f5d"
+    },
+    {
+      "model": "gatedgcn",
+      "split": "support",
+      "path": "artifacts/inputs/candidates/seed2/gatedgcn/target_support_predictions.csv",
+      "sha256": "a6699e7c6236c9f9086182215d708d4edb72c8d85a51fdca57945bf57d14f86c"
+    },
+    {
+      "model": "gatedgcn",
+      "split": "query",
+      "path": "artifacts/inputs/candidates/seed2/gatedgcn/target_query_predictions.csv",
+      "sha256": "b66b54987ae14d61680b5bb6db6058c49ded57b9045fdcf2c7ce9a31f6dfd93d"
+    }
+  ],
+  "cv_seeds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50
+  ],
+  "support_val_per_kernel": 10,
+  "alpha_grid": [
+    0.0001,
+    0.001,
+    0.01,
+    0.1,
+    1.0
+  ],
+  "selection_threshold_grid": [
+    0.7,
+    0.85,
+    0.95
+  ],
+  "weight_floor_grid": [
+    0.03,
+    0.05,
+    0.1
+  ]
+}

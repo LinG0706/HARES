@@ -1,0 +1,288 @@
+{
+  "cache_root": "EXTERNAL_PATH",
+  "seed": 4,
+  "source_split_seed": 4,
+  "k_values": [
+    50
+  ],
+  "selection": "kmeans",
+  "selection_tag": "kmeans_hmoe_source_exact",
+  "hmoe_checkpoint": "EXTERNAL_HMOE_CHECKPOINT",
+  "kmeans_note": "Exact released-source split reconstructed from runtime-captured KMeans indices; query row order mirrors coreset.py random_split.",
+  "hmoe_kmeans_capture": {
+    "path": "EXTERNAL_PATH",
+    "capture_version": 2,
+    "record_kernels": [
+      "syr2k",
+      "gemm-p",
+      "jacobi-2d",
+      "gemver-medium",
+      "trmm-opt",
+      "fdtd-2d-large"
+    ]
+  },
+  "source_total": 9416,
+  "target_total": 1137,
+  "source_by_kernel": [
+    {
+      "count": 371,
+      "kernel": "2mm"
+    },
+    {
+      "count": 571,
+      "kernel": "3mm"
+    },
+    {
+      "count": 397,
+      "kernel": "adi"
+    },
+    {
+      "count": 150,
+      "kernel": "atax"
+    },
+    {
+      "count": 153,
+      "kernel": "atax-medium"
+    },
+    {
+      "count": 180,
+      "kernel": "bicg"
+    },
+    {
+      "count": 46,
+      "kernel": "bicg-large"
+    },
+    {
+      "count": 183,
+      "kernel": "bicg-medium"
+    },
+    {
+      "count": 332,
+      "kernel": "correlation"
+    },
+    {
+      "count": 328,
+      "kernel": "covariance"
+    },
+    {
+      "count": 20,
+      "kernel": "doitgen"
+    },
+    {
+      "count": 94,
+      "kernel": "doitgen-red"
+    },
+    {
+      "count": 186,
+      "kernel": "fdtd-2d"
+    },
+    {
+      "count": 233,
+      "kernel": "gemm-blocked"
+    },
+    {
+      "count": 333,
+      "kernel": "gemm-ncubed"
+    },
+    {
+      "count": 292,
+      "kernel": "gemm-p-large"
+    },
+    {
+      "count": 734,
+      "kernel": "gemver"
+    },
+    {
+      "count": 149,
+      "kernel": "gesummv"
+    },
+    {
+      "count": 33,
+      "kernel": "gesummv-medium"
+    },
+    {
+      "count": 22,
+      "kernel": "heat-3d"
+    },
+    {
+      "count": 348,
+      "kernel": "jacobi-1d"
+    },
+    {
+      "count": 1921,
+      "kernel": "mvt"
+    },
+    {
+      "count": 644,
+      "kernel": "mvt-medium"
+    },
+    {
+      "count": 37,
+      "kernel": "nw"
+    },
+    {
+      "count": 184,
+      "kernel": "seidel-2d"
+    },
+    {
+      "count": 113,
+      "kernel": "spmv-ellpack"
+    },
+    {
+      "count": 398,
+      "kernel": "stencil"
+    },
+    {
+      "count": 51,
+      "kernel": "stencil-3d"
+    },
+    {
+      "count": 51,
+      "kernel": "symm"
+    },
+    {
+      "count": 422,
+      "kernel": "symm-opt"
+    },
+    {
+      "count": 217,
+      "kernel": "symm-opt-medium"
+    },
+    {
+      "count": 200,
+      "kernel": "syrk"
+    },
+    {
+      "count": 23,
+      "kernel": "trmm"
+    }
+  ],
+  "target_by_kernel": [
+    {
+      "count": 77,
+      "kernel": "fdtd-2d-large"
+    },
+    {
+      "count": 348,
+      "kernel": "gemm-p"
+    },
+    {
+      "count": 231,
+      "kernel": "gemver-medium"
+    },
+    {
+      "count": 257,
+      "kernel": "jacobi-2d"
+    },
+    {
+      "count": 121,
+      "kernel": "syr2k"
+    },
+    {
+      "count": 103,
+      "kernel": "trmm-opt"
+    }
+  ],
+  "source_split_counts": [
+    {
+      "count": 943,
+      "split": "test"
+    },
+    {
+      "count": 7532,
+      "split": "train"
+    },
+    {
+      "count": 941,
+      "split": "val"
+    }
+  ],
+  "target_split_counts": [
+    {
+      "count": 837,
+      "k": 50,
+      "split": "query"
+    },
+    {
+      "count": 300,
+      "k": 50,
+      "split": "support"
+    }
+  ],
+  "target_kernel_split_counts": [
+    {
+      "count": 27,
+      "k": 50,
+      "kernel": "fdtd-2d-large",
+      "split": "query"
+    },
+    {
+      "count": 50,
+      "k": 50,
+      "kernel": "fdtd-2d-large",
+      "split": "support"
+    },
+    {
+      "count": 298,
+      "k": 50,
+      "kernel": "gemm-p",
+      "split": "query"
+    },
+    {
+      "count": 50,
+      "k": 50,
+      "kernel": "gemm-p",
+      "split": "support"
+    },
+    {
+      "count": 181,
+      "k": 50,
+      "kernel": "gemver-medium",
+      "split": "query"
+    },
+    {
+      "count": 50,
+      "k": 50,
+      "kernel": "gemver-medium",
+      "split": "support"
+    },
+    {
+      "count": 207,
+      "k": 50,
+      "kernel": "jacobi-2d",
+      "split": "query"
+    },
+    {
+      "count": 50,
+      "k": 50,
+      "kernel": "jacobi-2d",
+      "split": "support"
+    },
+    {
+      "count": 71,
+      "k": 50,
+      "kernel": "syr2k",
+      "split": "query"
+    },
+    {
+      "count": 50,
+      "k": 50,
+      "kernel": "syr2k",
+      "split": "support"
+    },
+    {
+      "count": 53,
+      "k": 50,
+      "kernel": "trmm-opt",
+      "split": "query"
+    },
+    {
+      "count": 50,
+      "k": 50,
+      "kernel": "trmm-opt",
+      "split": "support"
+    }
+  ],
+  "duplicate_sample_ids": []
+}
+

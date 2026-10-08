@@ -1,0 +1,36 @@
+# Generated outputs and local artifacts
+outputs/
+runs/
+logs/
+tmp/
+artifacts/generated/
+__pycache__/
+*.py[cod]
+
+# Models, caches, and large binary data
+*.pt
+*.pth
+*.ckpt
+*.bin
+*.onnx
+*.npy
+*.npz
+*.h5
+*.hdf5
+*.db
+*.sqlite
+*.tiff
+*.zip
+
+# Local IDE and machine-specific files
+.idea/
+.vscode/
+.env
+
+# LaTeX build products
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.synctex*

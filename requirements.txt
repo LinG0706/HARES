@@ -1,0 +1,9 @@
+# Tested for the prediction-level HARES release.
+# The release does not train HMoE or the heterogeneous GNN experts.
+numpy>=1.24,<3
+pandas>=2.0,<4
+scipy>=1.10,<2
+scikit-learn>=1.2,<2
+# Required by scripts/sgformer_rgcn_qor/train_sgformer_rgcn_hmoe_protocol.py
+torch>=2.1,<3
+torch-geometric>=2.4,<3
