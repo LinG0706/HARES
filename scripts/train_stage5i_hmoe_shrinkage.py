@@ -17,8 +17,8 @@ from release_metrics import compute_metrics
 
 
 METHOD_ID = "FSS-R4-M1"
-METHOD_NAME = "Stage5I-HMoE-target-shrinkage"
-STAGE5E_METHOD_NAME = "Stage5E-DMW-AFRC"
+METHOD_NAME = "HARES"
+STAGE5E_METHOD_NAME = "Unshrunk pool"
 
 
 def sha256_file(path: Path) -> str:
@@ -30,7 +30,7 @@ def sha256_file(path: Path) -> str:
 
 
 def workspace_root() -> Path:
-    return Path(__file__).resolve().parents[3]
+    return Path(__file__).resolve().parents[1]
 
 
 def resolve_recorded_path(raw_path: str) -> Path:
@@ -38,14 +38,7 @@ def resolve_recorded_path(raw_path: str) -> Path:
     if path.exists():
         return path
 
-    normalized = raw_path.replace("\\", "/")
-    marker = "experiments/new4+harp/"
-    if marker in normalized:
-        suffix = normalized.split(marker, 1)[1]
-        candidate = workspace_root() / "experiments" / "new4+harp" / Path(suffix)
-        if candidate.exists():
-            return candidate
-    return path
+    return workspace_root() / path
 
 
 def load_stage5e_candidate_frames(stage5e_dir: Path, split: str) -> tuple[list[str], list[pd.DataFrame], list[dict]]:
@@ -252,6 +245,7 @@ def method_row(seed: int, method: str, metrics: dict, hmoe_loss: float) -> dict:
     row = {
         "seed": seed,
         "method": method,
+        "total_mse": float(metrics["total_mse"]),
         "hmoe_test_loss": float(metrics["hmoe_test_loss"]),
         "perf_rmse": float(metrics["perf_rmse"]),
         "util_LUT_rmse": float(metrics["util_LUT_rmse"]),
@@ -296,9 +290,9 @@ def write_archive(out_root: Path, archive_root: Path) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--hmoe-root", type=Path, default=Path("experiments/new4+harp/hmoe_paper_exact_baseline"))
-    parser.add_argument("--stage5e-root", type=Path, default=Path("experiments/new4+harp/stage5e_paper_exact_seed1_5"))
-    parser.add_argument("--out-root", type=Path, default=Path("experiments/new4+harp/stage5i_hmoe_shrinkage_seed1_5"))
+    parser.add_argument("--hmoe-root", type=Path, default=Path("artifacts/inputs/hmoe"))
+    parser.add_argument("--stage5e-root", type=Path, default=Path("artifacts/inputs/stage5e"))
+    parser.add_argument("--out-root", type=Path, default=Path("outputs/stage5i"))
     parser.add_argument("--archive-root", type=Path, default=None)
     parser.add_argument("--seeds", default="1 2 3 4 5")
     parser.add_argument("--lambda-grid", default="0 0.05 0.1 0.2 0.3")
@@ -390,8 +384,8 @@ def main() -> None:
             "query_predictions_read_before_selection": False,
             "support_input_hashes": support_hashes,
             "scientific_boundary": (
-                "HMoE-augmented diagnostic, not PureNew5. It uses complete HMoE "
-                "as an inference anchor and must be reported separately."
+                "HARES uses complete HMoE "
+                "as the inference anchor; correction strengths use support labels only."
             ),
         }
         write_json(seed_out / "selection_lock.json", lock)
@@ -433,6 +427,7 @@ def main() -> None:
     for method, group in per_seed.groupby("method", sort=False):
         row = {"method": method, "n_seeds": int(len(group))}
         for metric in [
+            "total_mse",
             "hmoe_test_loss",
             "perf_rmse",
             "util_LUT_rmse",
@@ -463,9 +458,8 @@ Method ID: `{METHOD_ID}`
 
 Protocol: `paired_shared_hmoe_kmeans_support`.
 
-This is an HMoE-augmented diagnostic, not the PureNew5 primary method. It uses
-complete HMoE as the inference anchor and applies a strongly constrained
-target-specific correction toward Stage5E:
+HARES uses complete HMoE as the inference anchor and applies a constrained
+metric-wise residual correction toward the fused heterogeneous prediction:
 
 ```text
 y = y_hmoe + lambda_target * (y_stage5e - y_hmoe)
@@ -481,9 +475,9 @@ y = y_hmoe + lambda_target * (y_stage5e - y_hmoe)
         write_archive(args.out_root, args.archive_root)
 
     print("Stage5I per-seed:")
-    print(per_seed[["seed", "method", "hmoe_test_loss", "delta_vs_hmoe", "better_than_hmoe"]].to_string(index=False))
+    print(per_seed[["seed", "method", "total_mse"]].to_string(index=False))
     print("\nStage5I mean/std:")
-    print(summary[["method", "hmoe_test_loss_mean", "hmoe_test_loss_std", "overall_rmse_mean", "wins_vs_hmoe"]].to_string(index=False))
+    print(summary[["method", "total_mse_mean", "total_mse_std"]].to_string(index=False))
     print(f"\nWrote: {args.out_root}")
     if args.archive_root is not None:
         print(f"Archived summaries: {args.archive_root}")

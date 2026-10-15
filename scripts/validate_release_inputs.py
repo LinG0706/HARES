@@ -7,6 +7,8 @@ from pathlib import Path
 
 import pandas as pd
 
+from paper_protocol import check_prediction as check_aligned_prediction, manifest_split
+
 
 TARGET_KERNELS = {
     "fdtd-2d-large",
@@ -16,8 +18,7 @@ TARGET_KERNELS = {
     "syr2k",
     "trmm-opt",
 }
-MODELS = ["harp_hmoe_support_paired", "graphgps", "exphormer", "polynormer", "gatedgcn"]
-EXTERNAL_SOTA = ["sgformer"]
+MODELS = ["harp", "graphgps", "exphormer", "polynormer", "gatedgcn"]
 
 
 def sha256(path: Path) -> str:
@@ -59,6 +60,21 @@ def main() -> None:
     checksum_by_path = {
         str(row.path).replace("\\", "/"): row for row in checksums.itertuples(index=False)
     }
+    expected_paths = set(checksum_by_path)
+    actual_paths = {
+        p.relative_to(root / "artifacts").as_posix()
+        for folder in ("inputs", "manifests", "protocol")
+        for p in (root / "artifacts" / folder).rglob("*") if p.is_file()
+    }
+    if expected_paths != actual_paths:
+        raise ValueError("Checksum index does not match the frozen input files")
+    for relative, item in checksum_by_path.items():
+        path = root / "artifacts" / relative
+        if path.stat().st_size != int(item.bytes) or sha256(path) != str(item.sha256):
+            raise ValueError(f"{path}: size or SHA-256 mismatch")
+        if pd.notna(item.rows):
+            if len(pd.read_csv(path)) != int(item.rows):
+                raise ValueError(f"{path}: row count differs from checksum index")
 
     for seed in seeds:
         hmoe = root / "artifacts" / "inputs" / "hmoe" / f"seed{seed}" / "target_finetune"
@@ -80,23 +96,11 @@ def main() -> None:
         if any(int(count) != 50 for count in target[target["split"].astype(str) == "support"].groupby("kernel").size()):
             raise ValueError(f"{manifest_path}: support is not 50 per target kernel")
 
-        for sota_name in EXTERNAL_SOTA:
-            sota_dir = root / "artifacts" / "inputs" / "sota" / sota_name / f"seed{seed}"
-            for split, expected_rows, expected_ids in (
-                ("support", 300, support_ids),
-                ("query", 837, query_ids),
-            ):
-                prediction = sota_dir / f"target_{split}_predictions.csv"
-                check_prediction(prediction, expected_rows, expected_ids)
-                checksum_key = prediction.relative_to(root / "artifacts").as_posix()
-                checksum_row = checksum_by_path.get(checksum_key)
-                if checksum_row is None:
-                    raise ValueError(f"{checksums_path}: missing checksum for {checksum_key}")
-                observed_hash = sha256(prediction)
-                if observed_hash != str(checksum_row.sha256):
-                    raise ValueError(f"{prediction}: SHA-256 mismatch against {checksums_path}")
-                if int(checksum_row.rows) != expected_rows:
-                    raise ValueError(f"{checksums_path}: row-count metadata mismatch for {checksum_key}")
+        references = {split: manifest_split(root, seed, split) for split in ("support", "query")}
+        for split in references:
+            check_aligned_prediction(hmoe / f"target_{split}_predictions.csv", references[split], seed)
+        for model in ("gnndse", "ironman"):
+            check_aligned_prediction(root / "artifacts/inputs/baselines" / model / f"seed{seed}/target_query_predictions.csv", references["query"], seed)
 
         lock_path = stage5e / "selection_lock.json"
         lock = json.loads(lock_path.read_text(encoding="utf-8"))
@@ -110,6 +114,7 @@ def main() -> None:
                     raise ValueError(f"{lock_path}: missing {model}/{split} candidate")
                 candidate = root / Path(item["path"])
                 check_prediction(candidate, expected_rows, expected_ids)
+                check_aligned_prediction(candidate, references[split], seed)
                 observed_hash = sha256(candidate)
                 if observed_hash != item.get("sha256"):
                     raise ValueError(f"{candidate}: SHA-256 mismatch")
@@ -118,7 +123,8 @@ def main() -> None:
             raise FileNotFoundError(stage5e / "stage5e_convex_weights.csv")
         if not (stage5e / "target_query_predictions.csv").exists():
             raise FileNotFoundError(stage5e / "target_query_predictions.csv")
-        print(f"seed{seed}: passed ({len(support_frame)} support, {len(query_ids)} query, SGFormer IDs and hashes checked)")
+        check_aligned_prediction(stage5e / "target_query_predictions.csv", references["query"], seed)
+        print(f"seed{seed}: passed ({len(support_frame)} support, {len(query_ids)} query, candidate IDs and hashes checked)")
 
     print("All HARES release inputs passed the protocol and hash checks.")
 

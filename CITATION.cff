@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite the HARES paper."
-title: "HARES: HMoE-Anchored Residual Ensemble for Few-Shot HLS QoR Prediction"
+title: "HARES: HMoE-Anchored Residual Ensemble with Shrinkage for Few-Shot HLS Quality-of-Results Prediction"
 type: software
 version: 1.0.0
 date-released: 2026-10-02

@@ -39,51 +39,20 @@
     "optional_file": "target_support_predictions.csv",
     "selection_lock_requirement": "candidate paths must be relative or regenerated; no machine-specific absolute paths"
   },
+  "comparison_prediction_directory": {
+    "models": {"gnndse": "GNN-DSE", "ironman": "IronMan-Pro"},
+    "layout": "artifacts/inputs/baselines/<model>/seed{1..5}/",
+    "required_files": ["target_query_predictions.csv", "prediction_export.json"],
+    "required_metadata_columns": ["sample_id", "kernel", "seed", "model"],
+    "required_target_columns": "y_true_<target> and y_pred_<target> for perf, util_LUT, util_FF, util_DSP, util_BRAM",
+    "query_rows": 837,
+    "evaluation_space": "same labels and sample IDs as each seed's HMoE query manifest; final predictions are already converted to that label space",
+    "role": "comparison only; not members of the HARES correction pool"
+  },
   "hmoe_directory": {
     "required_files": [
       "target_support_predictions.csv",
       "target_query_predictions.csv"
     ]
-  },
-  "sota_prediction_directory": {
-    "sgformer": {
-      "role": "external SOTA comparison baseline; excluded from the HARES correction pool",
-      "layout": "artifacts/inputs/sota/sgformer/seed{1..5}/",
-      "required_files": [
-        "target_support_predictions.csv",
-        "target_query_predictions.csv"
-      ],
-      "required_columns": [
-        "sample_id",
-        "kernel",
-        "gname",
-        "key",
-        "dataset_role",
-        "split",
-        "support_query",
-        "cache_split",
-        "file_name",
-        "actual_perf",
-        "seed",
-        "k",
-        "selection",
-        "y_true_perf",
-        "y_pred_perf",
-        "y_true_util_LUT",
-        "y_pred_util_LUT",
-        "y_true_util_FF",
-        "y_pred_util_FF",
-        "y_true_util_DSP",
-        "y_pred_util_DSP",
-        "y_true_util_BRAM",
-        "y_pred_util_BRAM"
-      ],
-      "row_counts": {
-        "target_support_predictions.csv": 300,
-        "target_query_predictions.csv": 837
-      },
-      "ID_requirement": "sample_id sets must match the corresponding HMoE protocol manifest support/query IDs",
-      "hash_requirement": "both files are listed in artifacts/input_checksums.csv and validated by scripts/validate_release_inputs.py"
-    }
   }
 }

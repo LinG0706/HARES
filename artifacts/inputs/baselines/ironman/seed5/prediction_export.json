@@ -1,0 +1,8 @@
+{
+  "method": "IronMan-Pro",
+  "seed": 5,
+  "phase": "support_finetune_query",
+  "original_export_sha256": "e3f442e2ce79ee8fcaed6e8f1a5fa8dfc8a1b8a83438ff29e426e3d8b489add7",
+  "export_note": "sample IDs, labels, and final evaluation-space predictions are preserved; redundant training-space columns are omitted",
+  "query_used_for_selection": false
+}

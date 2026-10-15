@@ -1,4 +1,4 @@
-scope_key,target,bias,weight::harp_hmoe_support_paired,weight::graphgps,weight::exphormer,weight::polynormer,weight::gatedgcn
+scope_key,target,bias,weight::harp,weight::graphgps,weight::exphormer,weight::polynormer,weight::gatedgcn
 fdtd-2d-large,perf,0.0,0.3582211081741498,0.0,0.6417788918258502,0.0,0.0
 fdtd-2d-large,util_LUT,0.0,0.6708444944675069,0.32915550553249306,0.0,0.0,0.0
 fdtd-2d-large,util_FF,0.0,1.0,0.0,0.0,0.0,0.0

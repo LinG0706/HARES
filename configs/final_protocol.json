@@ -27,6 +27,8 @@
     "qor": [1, 2, 3, 4, 5]
   },
   "targets": ["perf", "util_LUT", "util_FF", "util_DSP", "util_BRAM"],
+  "correction_pool": ["HARP", "GraphGPS", "Exphormer", "Polynormer", "GatedGCN"],
+  "comparison_methods": ["IronMan-Pro", "GatedGCN", "GNN-DSE", "GraphGPS", "Polynormer", "Exphormer"],
   "shrinkage": {
     "formula": "y_final = y_hmoe + lambda_target * (y_stage5e - y_hmoe)",
     "lambda_grid": [0.0, 0.05, 0.1, 0.2, 0.3],
@@ -43,6 +45,7 @@
   "input_layout": {
     "hmoe_root": "artifacts/inputs/hmoe",
     "stage5e_root": "artifacts/inputs/stage5e",
-    "candidate_root": "artifacts/inputs/candidates"
+    "candidate_root": "artifacts/inputs/candidates",
+    "baseline_root": "artifacts/inputs/baselines"
   }
 }

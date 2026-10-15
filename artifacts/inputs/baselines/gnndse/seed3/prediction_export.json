@@ -1,0 +1,8 @@
+{
+  "method": "GNN-DSE",
+  "seed": 3,
+  "phase": "support_finetune_query",
+  "original_export_sha256": "d519a1283377461c23a439e32c792eb4fa7ef69f0d58fb89b04ac3b6d2b1a278",
+  "export_note": "sample IDs, labels, and final evaluation-space predictions are preserved; redundant training-space columns are omitted",
+  "query_used_for_selection": false
+}

@@ -12,7 +12,7 @@ import pandas as pd
 from hmoe_metrics import hmoe_report_from_predictions
 
 
-TARGET_METHOD = "Stage5I-HMoE-target-shrinkage"
+TARGET_METHOD = "HARES"
 
 
 def parse_ints(text: str) -> list[int]:
@@ -20,21 +20,14 @@ def parse_ints(text: str) -> list[int]:
 
 
 def workspace_root() -> Path:
-    return Path(__file__).resolve().parents[3]
+    return Path(__file__).resolve().parents[1]
 
 
 def resolve_recorded_path(raw_path: str) -> Path:
     path = Path(raw_path)
     if path.exists():
         return path
-    normalized = raw_path.replace("\\", "/")
-    marker = "experiments/new4+harp/"
-    if marker in normalized:
-        suffix = normalized.split(marker, 1)[1]
-        candidate = workspace_root() / "experiments" / "new4+harp" / Path(suffix)
-        if candidate.exists():
-            return candidate
-    return path
+    return workspace_root() / path
 
 
 def read_candidate_catalog(stage5e_seed_dir: Path) -> dict[str, Path]:
@@ -53,7 +46,7 @@ def read_candidate_catalog(stage5e_seed_dir: Path) -> dict[str, Path]:
         if not support.exists() or not query.exists():
             raise FileNotFoundError(f"missing candidate predictions for {model}: {support} / {query}")
         catalog[model] = path
-    required = {"graphgps", "exphormer", "polynormer", "gatedgcn"}
+    required = {"harp", "graphgps", "exphormer", "polynormer", "gatedgcn"}
     missing = sorted(required - set(catalog))
     if missing:
         raise ValueError(f"{stage5e_seed_dir} lacks required new-GNN candidates: {missing}")
@@ -62,33 +55,33 @@ def read_candidate_catalog(stage5e_seed_dir: Path) -> dict[str, Path]:
 
 def pool_definitions() -> dict[str, list[str]]:
     return {
-        "full_harp_new4": [
-            "harp_hmoe_support_paired",
+        "full_pool": [
+            "harp",
             "graphgps",
             "exphormer",
             "polynormer",
             "gatedgcn",
         ],
         "loo_no_graphgps": [
-            "harp_hmoe_support_paired",
+            "harp",
             "exphormer",
             "polynormer",
             "gatedgcn",
         ],
         "loo_no_exphormer": [
-            "harp_hmoe_support_paired",
+            "harp",
             "graphgps",
             "polynormer",
             "gatedgcn",
         ],
         "loo_no_polynormer": [
-            "harp_hmoe_support_paired",
+            "harp",
             "graphgps",
             "exphormer",
             "gatedgcn",
         ],
         "loo_no_gatedgcn": [
-            "harp_hmoe_support_paired",
+            "harp",
             "graphgps",
             "exphormer",
             "polynormer",
@@ -99,7 +92,6 @@ def pool_definitions() -> dict[str, list[str]]:
             "polynormer",
             "gatedgcn",
         ],
-        "harp_only_correction": ["harp_hmoe_support_paired"],
     }
 
 
@@ -226,9 +218,9 @@ def stage5i_complete(stage5i_root: Path, seeds: list[int]) -> bool:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--base-stage5e-root", type=Path, default=Path("experiments/new4+harp/stage5e_paper_exact_seed1_5"))
-    parser.add_argument("--hmoe-root", type=Path, default=Path("experiments/new4+harp/hmoe_paper_exact_baseline"))
-    parser.add_argument("--out-root", type=Path, default=Path("experiments/new4+harp/stage5i_ab1_expert_contribution"))
+    parser.add_argument("--base-stage5e-root", type=Path, default=Path("artifacts/inputs/stage5e"))
+    parser.add_argument("--hmoe-root", type=Path, default=Path("artifacts/inputs/hmoe"))
+    parser.add_argument("--out-root", type=Path, default=Path("outputs/ablation"))
     parser.add_argument("--archive-root", type=Path, default=None)
     parser.add_argument("--seeds", default="1 2 3 4 5")
     parser.add_argument("--pools", default="all")

@@ -1,0 +1,26 @@
+\begin{table*}[!t]
+\centering
+\caption{QoR prediction comparison. Per-target columns report sample-weighted MSE; Total MSE is their sum. Values are mean $\pm$ sample standard deviation over five seeds.}
+\label{tab:main}
+\renewcommand{\arraystretch}{1}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lcccccc@{}}
+\toprule
+\textbf{Method} & \textbf{Perf. MSE} & \textbf{LUT MSE} & \textbf{FF MSE} & \textbf{DSP MSE} & \textbf{BRAM MSE} & \textbf{Total MSE}\\
+\midrule
+HARP~\cite{harp} & $0.0914\pm0.0270$ & $0.0134\pm0.0049$ & $0.0645\pm0.0565$ & $0.0386\pm0.0216$ & $0.0026\pm0.0005$ & $0.2105\pm0.0779$\\
+HMoE~\cite{hmoe} & $0.0609\pm0.0106$ & $0.0122\pm0.0040$ & $0.0287\pm0.0153$ & $0.0367\pm0.0193$ & $0.0026\pm0.0006$ & $0.1411\pm0.0143$\\
+Unshrunk pool & $0.0636\pm0.0128$ & $0.0109\pm0.0031$ & $0.0311\pm0.0218$ & $0.0380\pm0.0209$ & $\mathbf{0.0024\pm0.0004}$ & $0.1459\pm0.0328$\\
+\textbf{HARES} & $\mathbf{0.0505\pm0.0098}$ & $\mathbf{0.0108\pm0.0034}$ & $\mathbf{0.0235\pm0.0113}$ & $\mathbf{0.0344\pm0.0183}$ & $0.0025\pm0.0006$ & $\mathbf{0.1218\pm0.0152}$\\
+\midrule
+IronMan-Pro~\cite{ironman} & $0.1506\pm0.0461$ & $0.0379\pm0.0136$ & $0.0722\pm0.0472$ & $0.0663\pm0.0291$ & $0.0051\pm0.0006$ & $0.3321\pm0.0848$\\
+GatedGCN~\cite{gatedgcn} & $0.1568\pm0.0568$ & $0.0149\pm0.0047$ & $0.0381\pm0.0265$ & $0.0456\pm0.0162$ & $0.0034\pm0.0004$ & $0.2589\pm0.0670$\\
+GNN-DSE~\cite{gnndse} & $0.0937\pm0.0388$ & $0.0159\pm0.0049$ & $0.0664\pm0.0418$ & $0.0465\pm0.0230$ & $0.0080\pm0.0104$ & $0.2305\pm0.0532$\\
+GraphGPS~\cite{graphgps} & $0.1136\pm0.0530$ & $0.0137\pm0.0036$ & $0.0313\pm0.0196$ & $0.0411\pm0.0137$ & $0.0032\pm0.0004$ & $0.2029\pm0.0332$\\
+Polynormer~\cite{polynormer} & $0.1112\pm0.0589$ & $0.0133\pm0.0018$ & $0.0333\pm0.0256$ & $0.0376\pm0.0200$ & $0.0034\pm0.0003$ & $0.1988\pm0.0784$\\
+Exphormer~\cite{exphormer} & $0.1072\pm0.0643$ & $0.0121\pm0.0032$ & $0.0330\pm0.0215$ & $0.0348\pm0.0140$ & $0.0030\pm0.0002$ & $0.1901\pm0.0610$\\
+\bottomrule
+\end{tabular}%
+}
+\vspace{-3mm}
+\end{table*}
