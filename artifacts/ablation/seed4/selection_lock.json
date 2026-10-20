@@ -1,0 +1,38 @@
+{
+  "seed": 4,
+  "definition_sha256": "e39c2909aff37da6a4948512bd9c4b2764e042741b84576c664d61ed4c7d8825",
+  "selected_lambdas": {
+    "uniform": {
+      "perf": 0.3,
+      "util_LUT": 0.3,
+      "util_FF": 0.3,
+      "util_DSP": 0.3,
+      "util_BRAM": 0.0
+    },
+    "learned": {
+      "perf": 0.3,
+      "util_LUT": 0.3,
+      "util_FF": 0.3,
+      "util_DSP": 0.3,
+      "util_BRAM": 0.0
+    }
+  },
+  "support_input_hashes": {
+    "artifacts/inputs/stage5e/seed4/selection_lock.json": "976ed0a3f7f6ea093e6ec3ae674ddef0996383111f2d20a8ae2a4e8972faf70b",
+    "artifacts/inputs/stage5e/seed4/stage5e_convex_weights.csv": "1cf7d4c588458488cde0dbb79ff0e06e260c833fe27f825bc326cfb5719cdd1b",
+    "artifacts/inputs/candidates/seed4/harp/target_support_predictions.csv": "a2060ad74ea87c85f28a4844012ff497d604d4a092fd891872cde23e0d4b559b",
+    "artifacts/inputs/candidates/seed4/graphgps/target_support_predictions.csv": "0b838c2c6ef033110c1327605a4045037590ca75af5e095c79ae8a69045cf592",
+    "artifacts/inputs/candidates/seed4/exphormer/target_support_predictions.csv": "20a1ea5d1e5de4c360e2483f3ab5acb3b7655567514130d9ca484c0b7a08438e",
+    "artifacts/inputs/candidates/seed4/polynormer/target_support_predictions.csv": "a5bd36ecbebe440610c48f35a0ed0583b8dc3073d8e5ca0a42d4882c82139ebb",
+    "artifacts/inputs/candidates/seed4/gatedgcn/target_support_predictions.csv": "82cd508d1ea7ffa50853b6b8baad5f0e78ee8d4ad39af3547907f2907333469b",
+    "artifacts/inputs/hmoe/seed4/target_finetune/target_support_predictions.csv": "8bb5ad216076e2e2445ab3db50cd10fd2161a179bb99fc74af44bc748f51fd13"
+  },
+  "selected_artifact_hashes": {
+    "uniform_support_predictions.csv": "fa870d65b6a382167019ea98ae1ea7f600fce2efd049a891f8ea4a9888a409cc",
+    "uniform_lambda_search.csv": "04f9624012f4f73bda98f278757dad5cc5b87de67bc8b895fbab2682333111d5",
+    "learned_support_predictions.csv": "ae2c7f52eecfab30bc912732880e359d4fa20bb529b8e62b9361b3c4d6f3131e",
+    "learned_lambda_search.csv": "71afb1a9e6455fda80fa1f89b46544cf3dbb742d0190d32ea6e8a7dbd561acf9"
+  },
+  "query_labels_used_for_selection": false,
+  "query_predictions_read_before_selection": false
+}

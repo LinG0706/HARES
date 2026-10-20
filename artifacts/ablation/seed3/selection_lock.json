@@ -1,0 +1,38 @@
+{
+  "seed": 3,
+  "definition_sha256": "e39c2909aff37da6a4948512bd9c4b2764e042741b84576c664d61ed4c7d8825",
+  "selected_lambdas": {
+    "uniform": {
+      "perf": 0.3,
+      "util_LUT": 0.2,
+      "util_FF": 0.3,
+      "util_DSP": 0.0,
+      "util_BRAM": 0.0
+    },
+    "learned": {
+      "perf": 0.3,
+      "util_LUT": 0.3,
+      "util_FF": 0.3,
+      "util_DSP": 0.2,
+      "util_BRAM": 0.0
+    }
+  },
+  "support_input_hashes": {
+    "artifacts/inputs/stage5e/seed3/selection_lock.json": "aa459803701fce1feb383959abbef7bfb257075069967b6697b122feaaa870ca",
+    "artifacts/inputs/stage5e/seed3/stage5e_convex_weights.csv": "2f7e0bdb261b723f93e7194d2038feb570e71c4cf878d9d469da51617b398c9f",
+    "artifacts/inputs/candidates/seed3/harp/target_support_predictions.csv": "3b37acc9c49f8e6353317c0b55b58966b3603ad3cf719d8630713d09f88bad5f",
+    "artifacts/inputs/candidates/seed3/graphgps/target_support_predictions.csv": "7cf7f2c4643ee3f47f4470473ef49f59da5854b227cf20917e3cae9881b76042",
+    "artifacts/inputs/candidates/seed3/exphormer/target_support_predictions.csv": "a204b7bcc27fb90582eb86e92322333ccfbc3008c1a87eb62b24656533660671",
+    "artifacts/inputs/candidates/seed3/polynormer/target_support_predictions.csv": "4bf7222f5855f9d8a27d50c11c0b4db677771dee80817ee666f4ea2ade7005c0",
+    "artifacts/inputs/candidates/seed3/gatedgcn/target_support_predictions.csv": "31fbd303b3522bd5311a4e89f5428d0857edb202c0227e9baf4c9956b04b36ab",
+    "artifacts/inputs/hmoe/seed3/target_finetune/target_support_predictions.csv": "ab637cfc61bbea0e73cbf66e098523230c094a77e3f57bf6723fc75d24016fad"
+  },
+  "selected_artifact_hashes": {
+    "uniform_support_predictions.csv": "e9dfbba98bbe3b2f1030cf89868964e6070a46775ba85fca9b90b78dbbaaba95",
+    "uniform_lambda_search.csv": "bf42d2be89a4eefd90789ea6fb682f770ef86ef689e1c0282d1012d15179f2c4",
+    "learned_support_predictions.csv": "faffe353f02fdaa75230b14dd476e61c50a4647f4b14d0f568c9ce3d9cbd2a5a",
+    "learned_lambda_search.csv": "2655674a1f6bc4afd35c55adddc216bf0478d67b22b36120f864ef85052accc1"
+  },
+  "query_labels_used_for_selection": false,
+  "query_predictions_read_before_selection": false
+}

@@ -1,0 +1,42 @@
+{
+  "factors": [
+    "uniform versus learned expert fusion",
+    "without versus with HMoE-anchored shrinkage"
+  ],
+  "reference": "HMoE only",
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "uniform_weights": {
+    "harp": 0.2,
+    "graphgps": 0.2,
+    "exphormer": 0.2,
+    "polynormer": 0.2,
+    "gatedgcn": 0.2
+  },
+  "learned_pool": "replay frozen support-fitted weights and expert masks; no neural retraining",
+  "shrinkage": {
+    "formula": "y_final = y_hmoe + lambda_target * (y_stage5e - y_hmoe)",
+    "lambda_grid": [
+      0.0,
+      0.05,
+      0.1,
+      0.2,
+      0.3
+    ],
+    "min_support_relative_gain": 0.05,
+    "one_se_tolerance": 0.02,
+    "selection_labels": "support only",
+    "query_labels_used_for_selection": false
+  },
+  "joint_factor_note": "Anchoring and shrinkage are tested jointly, not as isolated components.",
+  "all_four_cells_reported": true,
+  "query_labels_used_for_selection": false,
+  "post_hoc_diagnostic": true,
+  "script_sha256": "9c57df300ee9795baf63486a804bb6f69c290a335eadcaf883740e7ac270110a",
+  "protocol_config_sha256": "b8de53237f80d594a4c63025ce50f07b7e851d6075ee71259a6b0ded75e415b8"
+}

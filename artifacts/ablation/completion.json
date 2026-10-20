@@ -1,0 +1,18 @@
+{
+  "complete": true,
+  "all_four_cells_retained": true,
+  "reference": "HMoE only",
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "query_rows_per_seed": 837,
+  "query_contrasts": 25,
+  "all_support_selections_locked_before_query_evaluation": true,
+  "query_labels_used_for_selection": false,
+  "frozen_inputs_unchanged": true,
+  "definition_sha256": "e39c2909aff37da6a4948512bd9c4b2764e042741b84576c664d61ed4c7d8825"
+}

@@ -9,7 +9,8 @@ five target standard deviations.
 
 `per_seed.csv` preserves the seed-level results; `mean_std.csv` preserves
 unrounded summary values; `main_table.tex` is generated from these values.
-The comparison rows are sorted by descending mean Total MSE.
+The row order follows the final manuscript. The lower comparison section is
+IronMan-Pro, GNN-DSE, SGFormer, and MPM, sorted by descending mean Total MSE.
 
 Regenerate after replaying HARES:
 
@@ -17,10 +18,15 @@ Regenerate after replaying HARES:
 python scripts/reproduce_paper_metrics.py --output-dir artifacts/paper
 ```
 
-The supplied manuscript and the recomputed exports agree on all ten displayed
-Total MSE means and standard deviations. Three per-target entries in the
-supplied manuscript differ at the final displayed digit from direct rounding
-of the released predictions:
+The eleven-method snapshot includes the final five-seed MPM and SGFormer
+query exports. MPM reports Total MSE `0.1552 +/- 0.0506`; SGFormer reports
+`0.1919 +/- 0.0523`, using the same sample-weighted evaluation. Their frozen
+implementation settings are recorded in each `prediction_export.json`.
+The learned pool without shrinkage is included only in the ablation snapshot
+under `artifacts/ablation/`. It is no longer a row of this main table.
+Existing methods retain their unrounded metrics. Three per-target entries in the
+previously supplied manuscript differ at the final displayed digit from
+direct rounding of the released predictions:
 
 | Entry | Manuscript | Direct rounding of exports |
 | --- | --- | --- |

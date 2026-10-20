@@ -1,0 +1,24 @@
+{
+  "method": "SGFormer",
+  "seed": 2,
+  "phase": "support_finetune_query",
+  "original_export_sha256": "bbd0f321a2d472b392ee3e1b4c753da1b365f5d6bcc196b718c8f6f5031e9895",
+  "export_note": "Sample IDs, labels, and final evaluation-space numeric strings are preserved; model metadata uses the paper name.",
+  "query_used_for_selection": false,
+  "selection_scope": "checkpoint selection within the frozen training run",
+  "implementation_note": "Protocol-aligned SGFormer graph predictor; not an unchanged full reproduction of the external system.",
+  "global_l2_gradient_clip": 1.0,
+  "batch_size": 64,
+  "optimizer": "Adam",
+  "initial_lr": 0.001,
+  "weight_decay": 0.0001,
+  "source_epoch_cap": 1000,
+  "support_epochs": 500,
+  "source_patience": 100,
+  "checkpoint_selection": {
+    "source": "minimum_source_val_batch_mean_sumMSE",
+    "support": "minimum_support_training_sample_weighted_sumMSE"
+  },
+  "original_training_config_sha256": "0fe617e107d46a93d7dbef07b03d43af15ed7df6f6cd6c62006380e8057f4399",
+  "original_support_checkpoint_sha256": "4170203ddd264faf4beb1637b7b0a33319042ee7948d02f1afc0dbfd763ec62b"
+}

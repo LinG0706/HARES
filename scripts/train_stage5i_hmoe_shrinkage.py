@@ -18,7 +18,7 @@ from release_metrics import compute_metrics
 
 METHOD_ID = "FSS-R4-M1"
 METHOD_NAME = "HARES"
-STAGE5E_METHOD_NAME = "Unshrunk pool"
+STAGE5E_METHOD_NAME = "Learned pool"
 
 
 def sha256_file(path: Path) -> str:

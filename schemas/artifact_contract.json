@@ -40,7 +40,7 @@
     "selection_lock_requirement": "candidate paths must be relative or regenerated; no machine-specific absolute paths"
   },
   "comparison_prediction_directory": {
-    "models": {"gnndse": "GNN-DSE", "ironman": "IronMan-Pro"},
+    "models": {"gnndse": "GNN-DSE", "ironman": "IronMan-Pro", "sgformer": "SGFormer", "mpm": "MPM"},
     "layout": "artifacts/inputs/baselines/<model>/seed{1..5}/",
     "required_files": ["target_query_predictions.csv", "prediction_export.json"],
     "required_metadata_columns": ["sample_id", "kernel", "seed", "model"],
@@ -48,6 +48,13 @@
     "query_rows": 837,
     "evaluation_space": "same labels and sample IDs as each seed's HMoE query manifest; final predictions are already converted to that label space",
     "role": "comparison only; not members of the HARES correction pool"
+  },
+  "ablation_output_directory": {
+    "layout": "artifacts/ablation/",
+    "required_files": ["definition.json", "all_support_selections_locked.json", "per_seed.csv", "mean_std.csv", "ablation_table.tex", "input_checksums.csv", "completion.json"],
+    "variants": ["anchor_only", "uniform_direct", "learned_direct", "uniform_anchored", "learned_anchored"],
+    "prediction_layout": "seed{1..5}/<variant>/target_query_predictions.csv",
+    "selection": "Both pools use the same support-only shrinkage rule; all five seeds are locked before query evaluation. Learned weights and masks are replayed from the main experiment."
   },
   "hmoe_directory": {
     "required_files": [

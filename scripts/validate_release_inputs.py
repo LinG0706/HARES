@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from paper_protocol import check_prediction as check_aligned_prediction, manifest_split
+from paper_protocol import BASELINE_MODELS, MODEL_NAMES, check_prediction as check_aligned_prediction, manifest_split
 
 
 TARGET_KERNELS = {
@@ -99,8 +99,16 @@ def main() -> None:
         references = {split: manifest_split(root, seed, split) for split in ("support", "query")}
         for split in references:
             check_aligned_prediction(hmoe / f"target_{split}_predictions.csv", references[split], seed)
-        for model in ("gnndse", "ironman"):
-            check_aligned_prediction(root / "artifacts/inputs/baselines" / model / f"seed{seed}/target_query_predictions.csv", references["query"], seed)
+        for model in BASELINE_MODELS:
+            directory = root / "artifacts/inputs/baselines" / model / f"seed{seed}"
+            frame = check_aligned_prediction(directory / "target_query_predictions.csv", references["query"], seed)
+            metadata = json.loads((directory / "prediction_export.json").read_text(encoding="utf-8"))
+            if metadata.get("method") != MODEL_NAMES[model] or metadata.get("seed") != seed:
+                raise ValueError(f"{directory}: comparison method/seed metadata mismatch")
+            if metadata.get("query_used_for_selection") is not False:
+                raise ValueError(f"{directory}: query-label selection flag is not false")
+            if set(frame["model"].astype(str)) != {MODEL_NAMES[model]}:
+                raise ValueError(f"{directory}: model column differs from the paper name")
 
         lock_path = stage5e / "selection_lock.json"
         lock = json.loads(lock_path.read_text(encoding="utf-8"))

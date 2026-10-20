@@ -1,0 +1,15 @@
+{
+  "method": "MPM",
+  "seed": 4,
+  "phase": "support_finetune_query",
+  "original_export_sha256": "806af5220c0cb4e0df4330f3910595971cd638f846af91f36f15813dea78a164",
+  "export_note": "sample IDs, labels, and final evaluation-space predictions are preserved; model metadata uses the paper name",
+  "query_used_for_selection": false,
+  "selection_scope": "checkpoint selection within the frozen training run",
+  "implementation_note": "The final MPM implementation uses samplewise graph/text fusion and deterministic soft graph gates during training and inference.",
+  "gate_mode": "soft",
+  "gate_temperature": 0.5,
+  "text_encoding": "pragma-prefix single512; all-hidden-state CLS mean",
+  "original_training_config_sha256": "53d03831d84de86798667af6a3987c64e112ad0d0934fde8d02ab9807adde9a0",
+  "original_support_checkpoint_sha256": "0241fd8af76cbfcab6edf91b504df68748fac625bbf764d8a7929ae2a0e2eed5"
+}

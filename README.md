@@ -31,11 +31,23 @@ gatedgcn/
 
 These five predictors form the HARES correction pool. `HMoE` is supplied as the
 anchor prediction under `artifacts/inputs/hmoe/`. The five-seed query exports
-for `GNN-DSE` and `IronMan-Pro` are included under
-`artifacts/inputs/baselines/gnndse/` and `artifacts/inputs/baselines/ironman/`.
+for `GNN-DSE`, `IronMan-Pro`, `SGFormer`, and `MPM` are included under
+`artifacts/inputs/baselines/gnndse/`, `artifacts/inputs/baselines/ironman/`,
+`artifacts/inputs/baselines/sgformer/`, and `artifacts/inputs/baselines/mpm/`.
 They are comparison methods, excluded from the HARES correction pool.
 Model names identify the methods compared under this protocol; exporting
 predictions does not reproduce the original papers' training experiments.
+
+All four comparison methods use the same 50 support designs per target kernel
+and the same 837 query designs for each of the five paired seeds. Like GNN-DSE
+and IronMan-Pro, MPM and SGFormer are supplied as frozen query CSVs and export
+metadata, not as neural-network training scripts or checkpoints.
+MPM uses graph/text fusion with deterministic soft graph gates (temperature
+0.5) and pragma-prefixed CodeBERT features. SGFormer uses protocol-aligned graph
+inputs and global L2 gradient clipping at 1.0 during source and support training.
+These implementation settings are recorded in each `prediction_export.json`;
+the exports are protocol-aligned comparisons, not unchanged reproductions of
+the external systems.
 
 The internal labels `Stage5E-DMW-AFRC`/`FSS-R2-M1` refer to the
 coverage-weighted convex correction, and `Stage5I`/`FSS-R4-M1` refers to the
@@ -118,12 +130,14 @@ python scripts/reproduce_paper_metrics.py \
   --output-dir outputs/paper
 ```
 
-This recomputes all ten table rows, checks seed-specific query IDs and labels,
+This recomputes all eleven table rows, checks seed-specific query IDs and labels,
 and writes per-seed metrics, five-seed means/sample standard deviations, and
-`main_table.tex`. The first four rows are HARP, HMoE, Unshrunk pool, and HARES;
-the six comparison rows follow in descending Total MSE order. A verified
-snapshot is included in `artifacts/paper/`. No baseline is refitted by this
-command. All evaluation labels and predictions retain their original values.
+`main_table.tex`. The upper section follows the final paper order: GatedGCN,
+HARP, GraphGPS, Polynormer, Exphormer, HMoE, and HARES. The lower section contains
+IronMan-Pro, GNN-DSE, SGFormer, and MPM in descending mean Total MSE order.
+A verified snapshot is included in `artifacts/paper/`. The learned pool without
+shrinkage is reported in the ablation table only. No baseline is refitted by
+this command. All evaluation labels and predictions retain their original values.
 
 ## Regenerate the convex correction before HARES
 
@@ -150,19 +164,41 @@ mkdir -p outputs/stage5e/seed1
 ```
 
 After all five Stage5E seeds are generated, pass
-`--stage5e-root outputs/stage5e` to the HARES command. The expert-contribution
-ablation launcher is `scripts/run_stage5i_expert_contribution_ablation.py`.
+`--stage5e-root outputs/stage5e` to the HARES command.
 
-Run the leave-one-expert-out ablation with the same locked inputs:
+## Reproduce the paper ablation
+
+Run the full expert-fusion/shrinkage comparison from the bundled inputs:
 
 ```bash
-python scripts/run_stage5i_expert_contribution_ablation.py
+python scripts/run_expert_fusion_ablation.py --output-dir outputs/ablation
 ```
 
-This refits the coverage-weighted pool and shrinkage for each removal. It can
-take substantially longer than replaying the locked HARES weights.
+The five rows match the final manuscript:
 
-The paper release covers QoR prediction and the reported expert-pool ablation.
+| Expert fusion | Shrinkage | Total MSE (mean +/- sample SD) |
+| --- | --- | --- |
+| HMoE only | -- | 0.1411 +/- 0.0143 |
+| Uniform pool | No | 0.1519 +/- 0.0382 |
+| Learned pool | No | 0.1459 +/- 0.0328 |
+| Uniform pool | Yes | 0.1288 +/- 0.0200 |
+| Learned pool (HARES) | Yes | 0.1218 +/- 0.0152 |
+
+The uniform pool assigns weight 1/5 to every expert. The learned pool replays
+the same support-fitted weights and expert masks as the main HARES experiment.
+Without shrinkage, each row directly uses its pool prediction. With shrinkage,
+the prediction is `anchor + lambda_target * (pool - anchor)` using the same
+support-only selection rule for both pools. All five seeds' coefficients are
+locked before query evaluation. No upstream predictor is retrained.
+
+Outputs include per-seed predictions for all five rows, per-seed and aggregate
+MSE CSVs, support-selection locks, input hashes, and `ablation_table.tex`.
+The verified snapshot is in `artifacts/ablation/`. This is a matched two-factor
+diagnostic designed after the main experiments. It tests anchoring plus
+shrinkage jointly and learned fitting plus expert selection jointly; it does
+not establish independent accuracy gains for every internal component.
+
+The paper release covers QoR prediction and the expert-fusion/shrinkage ablation.
 Internal exploration branches, generated logs, model checkpoints, and generic
 oracle/router diagnostics are intentionally excluded.
 

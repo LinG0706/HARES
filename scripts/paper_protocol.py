@@ -8,8 +8,9 @@ TARGETS = ["perf", "util_LUT", "util_FF", "util_DSP", "util_BRAM"]
 MODEL_NAMES = {
     "harp": "HARP", "graphgps": "GraphGPS", "exphormer": "Exphormer",
     "polynormer": "Polynormer", "gatedgcn": "GatedGCN",
-    "gnndse": "GNN-DSE", "ironman": "IronMan-Pro",
+    "gnndse": "GNN-DSE", "ironman": "IronMan-Pro", "sgformer": "SGFormer", "mpm": "MPM",
 }
+BASELINE_MODELS = ("ironman", "gnndse", "sgformer", "mpm")
 
 
 def check_prediction(path: Path, reference: pd.DataFrame, seed: int) -> pd.DataFrame:

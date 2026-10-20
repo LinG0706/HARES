@@ -1,0 +1,21 @@
+\begin{table}[t]
+\centering
+\caption{Ablation of expert fusion and HMoE-anchored shrinkage. Total MSE is reported as mean $\pm$ sample standard deviation over five seeds.}
+\label{tab:ablation}
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.06}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Expert fusion} & \textbf{Shrinkage} & \textbf{Total MSE}\\
+\midrule
+HMoE only & -- & $0.1411\pm0.0143$\\
+\midrule
+Uniform pool & No & $0.1519\pm0.0382$\\
+Learned pool & No & $0.1459\pm0.0328$\\
+Uniform pool & Yes & $0.1288\pm0.0200$\\
+\textbf{Learned pool (HARES)} & Yes & $\mathbf{0.1218}\pm0.0152$\\
+\bottomrule
+\end{tabular}
+\vspace{-3mm}
+\end{table}

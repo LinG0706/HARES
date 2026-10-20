@@ -7,7 +7,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from paper_protocol import MODEL_NAMES, TARGETS, check_prediction, manifest_split
+from paper_protocol import BASELINE_MODELS, MODEL_NAMES, TARGETS, check_prediction, manifest_split
 
 
 def mse_row(frame: pd.DataFrame, method: str, seed: int) -> dict:
@@ -23,7 +23,6 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1])
     parser.add_argument("--hmoe-root", type=Path, default=Path("artifacts/inputs/hmoe"))
-    parser.add_argument("--stage5e-root", type=Path, default=Path("artifacts/inputs/stage5e"))
     parser.add_argument("--candidate-root", type=Path, default=Path("artifacts/inputs/candidates"))
     parser.add_argument("--baseline-root", type=Path, default=Path("artifacts/inputs/baselines"))
     parser.add_argument("--hares-root", type=Path, default=Path("outputs/stage5i"))
@@ -43,10 +42,9 @@ def main() -> None:
         sources = {
             "HARP": resolve(args.candidate_root) / f"seed{seed}/harp/target_query_predictions.csv",
             "HMoE": resolve(args.hmoe_root) / f"seed{seed}/target_finetune/target_query_predictions.csv",
-            "Unshrunk pool": resolve(args.stage5e_root) / f"seed{seed}/target_query_predictions.csv",
             "HARES": resolve(args.hares_root) / f"seed{seed}/target_query_predictions.csv",
         }
-        for model in ("gnndse", "ironman"):
+        for model in BASELINE_MODELS:
             sources[MODEL_NAMES[model]] = resolve(args.baseline_root) / model / f"seed{seed}/target_query_predictions.csv"
         for model in ("graphgps", "exphormer", "polynormer", "gatedgcn"):
             sources[MODEL_NAMES[model]] = resolve(args.candidate_root) / f"seed{seed}" / model / "target_query_predictions.csv"
@@ -57,7 +55,7 @@ def main() -> None:
     columns = [f"{t}_mse" for t in TARGETS] + ["total_mse"]
     summary = per_seed.groupby("method", sort=False)[columns].agg(["mean", "std"])
     summary.columns = [f"{column}_{stat}" for column, stat in summary.columns]
-    first = ["HARP", "HMoE", "Unshrunk pool", "HARES"]
+    first = ["GatedGCN", "HARP", "GraphGPS", "Polynormer", "Exphormer", "HMoE", "HARES"]
     others = summary.drop(index=first).sort_values("total_mse_mean", ascending=False).index.tolist()
     summary = summary.loc[first + others].reset_index()
     summary.insert(1, "n_seeds", len(seeds))
@@ -79,7 +77,7 @@ def main() -> None:
             r"\resizebox{\textwidth}{!}{%", r"\begin{tabular}{@{}lcccccc@{}}", r"\toprule",
             r"\textbf{Method} & \textbf{Perf. MSE} & \textbf{LUT MSE} & \textbf{FF MSE} & \textbf{DSP MSE} & \textbf{BRAM MSE} & \textbf{Total MSE}\\", r"\midrule",
         ]
-        citations = {"HARP": "harp", "HMoE": "hmoe", "GNN-DSE": "gnndse", "IronMan-Pro": "ironman", "GraphGPS": "graphgps", "Exphormer": "exphormer", "Polynormer": "polynormer", "GatedGCN": "gatedgcn"}
+        citations = {"HARP": "harp", "HMoE": "hmoe", "GNN-DSE": "gnndse", "IronMan-Pro": "ironman", "SGFormer": "tang2026sgformerrgcn", "MPM": "mpm", "GraphGPS": "graphgps", "Exphormer": "exphormer", "Polynormer": "polynormer", "GatedGCN": "gatedgcn"}
         for _, row in summary.iterrows():
             if row["method"] == others[0]:
                 latex.append(r"\midrule")
